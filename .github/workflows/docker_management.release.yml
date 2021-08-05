@@ -176,8 +176,7 @@ jobs:
     if: needs.build-container.outputs.REPO_FILE_CHECK=='success'
     strategy:
       matrix:
-        platform: [linux/amd64]
-#         platform: [linux/amd64, linux/arm64]
+        platform: [linux/amd64, linux/arm64]
         
     steps:
       - 
