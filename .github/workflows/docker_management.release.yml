@@ -137,6 +137,14 @@ jobs:
         with:
           ref: refs/tags/${{ steps.build_info.outputs.MBED_OS_VERSION }}
 
+#       - 
+#         name: Skip the workflow if Dockerfile doesn't exist
+#         id: docker_info
+#         run: |
+#           if [ ! -f "./docker_images/mbed-os-env/Dockerfile" ]; then
+#               echo "Dockerfile doesn't in this repo."
+#           fi
+          
       -
         name: Build docker containers
         uses: docker/build-push-action@v2
@@ -148,6 +156,7 @@ jobs:
           push: true
           file: ./docker_images/mbed-os-env/Dockerfile
           tags: ghcr.io/${{ steps.build_info.outputs.REPO_OWNER }}/mbed-os-env-tmp:${{ steps.build_info.outputs.DOCKER_DEV_TAG }}
+        continue-on-error: true
 
 
   test-container:
@@ -216,6 +225,8 @@ jobs:
         with:
           ref: refs/tags/${{ steps.build_info.outputs.MBED_OS_VERSION }}
           path: mbed-os-example-blinky/mbed-os
+
+
 
       - 
         name: Find DEV DOCKER DIGEST
