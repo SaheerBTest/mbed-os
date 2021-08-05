@@ -138,6 +138,8 @@ jobs:
         with:
           ref: refs/tags/${{ steps.build_info.outputs.MBED_OS_VERSION }}
 
+      # if we are trying to build docker image for an earlier version of mbed-os, either scheduled
+      # or manually, dockerfile will not exist. Then, skip the workflow
       - 
         name: Skip the workflow if Dockerfile doesn't exist
         id: repo_status
@@ -147,13 +149,6 @@ jobs:
               exit 1
           fi
         continue-on-error: true
-
-      - 
-        name: Print status
-        id: print
-        run: 
-          echo "status"
-          echo ${{steps.repo_status.outcome}}
         
       -
         name: Build docker containers
