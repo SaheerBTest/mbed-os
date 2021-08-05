@@ -131,41 +131,41 @@ jobs:
           file: ./docker_images/mbed-os-env/Dockerfile
           tags: ghcr.io/${{ steps.build_info.outputs.REPO_OWNER }}/mbed-os-env-tmp:${{ steps.build_info.outputs.DOCKER_DEV_TAG }}
 
-#   test-container:
-#     runs-on: ubuntu-latest
-#     needs: build-container
-#     strategy:
-#       matrix:
-#         platform: [linux/amd64, linux/arm64]
+  test-container:
+    runs-on: ubuntu-latest
+    needs: build-container
+    strategy:
+      matrix:
+        platform: [linux/amd64, linux/arm64]
         
-#     steps:
-#       - 
-#         name: unarchive artefacts
-#         uses: actions/download-artifact@v2
-#         with:
-#           name: build-info
+    steps:
+      - 
+        name: unarchive artefacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-info
           
-#       - 
-#         name: Get build info from archive
-#         shell: bash
-#         id: build_info
-#         run: |
-#           value=`cat dev_tag`
-#           echo "TAG is $value"
-#           echo "::set-output name=DOCKER_DEV_TAG::$value"
-#           value=`cat prod_tag_dated`
-#           echo "TAG is $value"
-#           echo "::set-output name=DOCKER_PROD_TAG_DATED::$value"
-#           value=`cat prod_tag_latest`
-#           echo "::set-output name=DOCKER_PROD_TAG_LATEST::$value"
-#           value=`cat mbed_os_version`
-#           echo "::set-output name=MBED_OS_VERSION::$value"
-#           value=`cat repository_owner`
-#           echo "::set-output name=REPO_OWNER::$value"
+      - 
+        name: Get build info from archive
+        shell: bash
+        id: build_info
+        run: |
+          value=`cat dev_tag`
+          echo "TAG is $value"
+          echo "::set-output name=DOCKER_DEV_TAG::$value"
+          value=`cat prod_tag_dated`
+          echo "TAG is $value"
+          echo "::set-output name=DOCKER_PROD_TAG_DATED::$value"
+          value=`cat prod_tag_latest`
+          echo "::set-output name=DOCKER_PROD_TAG_LATEST::$value"
+          value=`cat mbed_os_version`
+          echo "::set-output name=MBED_OS_VERSION::$value"
+          value=`cat repository_owner`
+          echo "::set-output name=REPO_OWNER::$value"
           
-#       -
-#         name: Checkout
-#         uses: actions/checkout@v2
+      -
+        name: Checkout
+        uses: actions/checkout@v2
 
 #       - 
 #         name: Find DEV DOCKER DIGEST
