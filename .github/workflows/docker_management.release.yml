@@ -245,7 +245,7 @@ jobs:
         id: docker_info
         run: |
           cd mbed-os-example-blinky/mbed-os
-          DIGEST=$(python ./.github/workflows/ci_scripts/ghcr_utils.py -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }} get-digest -r mbed-os-env-tmp -t ${{ steps.build_info.outputs.DOCKER_DEV_TAG }} -p ${{ matrix.platform }} )
+          DIGEST=$(python ./.github/workflows/ci_scripts/ghcr_utils.py -u ${{ steps.build_info.outputs.REPO_OWNER }} -p ${{ secrets.GITHUB_TOKEN }} get-digest -r mbed-os-env-tmp -t ${{ steps.build_info.outputs.DOCKER_DEV_TAG }} -p ${{ matrix.platform }} )
           echo "::set-output name=DIGEST::$DIGEST"
           echo "Docker DIGEST: $DIGEST"
 
